@@ -46,8 +46,10 @@ const expensesget = async (req, res) => {
 }
 const expensespage = async (req, res) => {
     try {
-        const { page, limit } = req.body
+        const page = req.body.page
+        const limit = Number(req.body.limit)
         const offset = (page - 1) * limit
+        
         const token = req.headers.authorization?.split(' ')[1]
         const user = jwt.verify(token, 'securitykey')
         const r = await data.findAndCountAll({
@@ -57,14 +59,15 @@ const expensespage = async (req, res) => {
             limit: limit,
             offset: offset
         })
+        
         res.status(200).json({
             message: 'token is valid',
             data: r.rows,
             totl: r.count,
             currentpage: Number(page) + 1,
             prevpage: Number(page) ,
-            nextpage: Number(page) + 2,
-            lastpage: Math.ceil(r.count / 5),
+            nextpage: (Math.ceil(r.count / limit) >= (Number(page) + 2)) ? Number(page) + 2 : null,
+            lastpage: Math.ceil(r.count / limit)
         })
     }
     catch (e) {

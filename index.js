@@ -93,13 +93,39 @@ function updatePaginationUI(paginationData) {
         nextBtn.style.display = 'none';
     }
 }
+document.querySelector('.limit').addEventListener('submit',async (event)=>{
+    event.preventDefault()
+    try
+    {
+        const limit = event.target.limit.value
+        console.log(limit)
+        let data = await axios.post('/expenses/page',{
+            page : 1,
+            limit : limit
+        },{
+        headers: 
+        {
+            Authorization: ` Bearer ${localStorage.getItem('token')}`
+        }})
+        document.querySelector('ul').innerHTML = ''
+        console.log(data)
+        f(data.data.data)
+        updatePaginationUI(data.data);
 
+    }
+    catch(e)
+    {
+        console.log(e)
+    }
+})
 async function pages(v){
     try
     {
+        const limit = document.querySelector('#limit').value
+        console.log(limit)
         let data = await axios.post('/expenses/page',{
             page : v,
-            limit : 5
+            limit : limit
         },{
         headers: 
         {
@@ -122,7 +148,7 @@ window.addEventListener('load', async (event) => {
     try {
         let data = await axios.get("/expenses", {
             headers: {
-                Authorization: ` Bearer ${localStorage.getItem('token')}`
+                Authorization: ` Bearer ${localStorage.getItem('token')}`,
             }
         })
         console.log(data.data)
