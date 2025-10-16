@@ -43,6 +43,80 @@ function protable(obj) {
     return tr
 }
 
+function updatePaginationUI(paginationData) {
+    const { currentpage, prevpage, nextpage, lastpage } = paginationData;
+
+    const firstBtn = document.querySelector('#first');
+    const prevBtn = document.querySelector('#prev');
+    const currentBtn = document.querySelector('#current');
+    const nextBtn = document.querySelector('#next');
+    const lastBtn = document.querySelector('#last');
+
+    currentBtn.innerHTML = currentpage;
+
+    if (currentpage > 1) {
+        prevBtn.style.display = 'inline';
+        prevBtn.innerHTML = prevpage;
+        if (prevpage > 1) {
+            firstBtn.style.display = 'inline';
+            firstBtn.innerHTML = '1';
+        } else {
+            firstBtn.style.display = 'none';
+        }
+    } else {
+        prevBtn.style.display = 'none';
+        firstBtn.style.display = 'none';
+    }
+
+
+    if (currentpage < lastpage) {
+        nextBtn.style.display = 'inline';
+        nextBtn.innerHTML = nextpage;
+        if (nextpage < lastpage) {
+            lastBtn.style.display = 'inline';
+            lastBtn.innerHTML = lastpage;
+        } else {
+            lastBtn.style.display = 'none';
+        }
+    } else {
+        nextBtn.style.display = 'none';
+        lastBtn.style.display = 'none';
+    }
+
+    if(nextpage == lastpage )
+    {
+        lastBtn.style.display = 'none';
+    }
+
+    if(currentpage == lastpage)
+    {
+        nextBtn.style.display = 'none';
+    }
+}
+
+async function pages(v){
+    try
+    {
+        let data = await axios.post('/expenses/page',{
+            page : v,
+            limit : 5
+        },{
+        headers: 
+        {
+            Authorization: ` Bearer ${localStorage.getItem('token')}`
+        }})
+        document.querySelector('ul').innerHTML = ''
+        console.log(data)
+        f(data.data.data)
+        updatePaginationUI(data.data);
+
+    }
+    catch(e)
+    {
+        console.log(e)
+    }
+}
+
 window.addEventListener('load', async (event) => {
     event.preventDefault()
     try {
@@ -51,11 +125,47 @@ window.addEventListener('load', async (event) => {
                 Authorization: ` Bearer ${localStorage.getItem('token')}`
             }
         })
+        console.log(data.data)
+        document.querySelector('#current').innerHTML = data.data.currentpage
+        if(data.data.currentpage = 1)
+        {
+            document.querySelector('#prev').style = 'display : none;'
+            document.querySelector('#first').style = 'display : none;'
+        }
+        else if(data.data.prevpage = 1)
+        {
+            document.querySelector('#prev').style = 'display : inline;'
+            document.querySelector('#prev').innerHTML = data.data.prevpage
+            document.querySelector('#first').style = 'display : none;'
+        }
+        else if(data.data.prevpage = 2)
+        {
+            document.querySelector('#prev').style = 'display : inline;'
+            document.querySelector('#prev').innerHTML = data.data.prevpage
+            document.querySelector('#first').style = 'display : inline;'
+            document.querySelector('#first').innerHTML = '1'
+        }
+        if(data.data.currentpage == data.data.lastpage)
+        {
+            document.querySelector('#next').style = 'display : none;'
+            document.querySelector('#last').style = 'display : none;'
+        }
+        else if(data.data.nextpage == data.data.lastpage)
+        {
+            document.querySelector('#next').style = 'display : inline;'
+            document.querySelector('#next').innerHTML = data.data.nextpage
+            document.querySelector('#last').style = 'display : none;'
+        }
+        else
+        {
+            
+            document.querySelector('#next').innerHTML = data.data.nextpage
+            document.querySelector('#last').innerHTML = data.data.lastpage
+        }
         f(data.data.data)
         if (data.data.pro == true) {
             document.querySelector('#pro').innerHTML = 'You are a Pro...'
             let r = await axios.get('/pro')
-            console.log(r)
             const table = document.createElement('table')
             const th = document.createElement('thead')
             let keys = Object.keys(r.data.data[0])
@@ -95,6 +205,13 @@ window.addEventListener('load', async (event) => {
         }
         document.querySelector('#report').appendChild(table)
 
+
+
+        /** let d = await axios.get("/expenses", {
+            headers: {
+                Authorization: ` Bearer ${localStorage.getItem('token')}`
+            }
+        }) */
 
     }
     catch (e) {
