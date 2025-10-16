@@ -65,7 +65,7 @@ li {
 }
 table{
     align-self : 'center';
-    margin-left : 50%;
+    justify-self : 'center'
 }
 #dashboard > h1{
     margin-left : 50%;

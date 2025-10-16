@@ -10,6 +10,7 @@ const pay = require('./route/pay.js')
 const pro = require('./route/pro.js')
 const ask = require('./route/ask.js')
 const forgot = require('./route/forgot.js')
+const dates = require('./route/dates.js')
 const port = 1000
 require('./model/model.js')
 app.use(express.json())
@@ -28,11 +29,12 @@ app.use('/pay', pay)
 app.use('/pro', pro)
 app.use('/ask', ask)
 app.use('/forgot', forgot)
+app.use('/dates', dates)
 app.use((req, res) => {
     res.status(404).send('page not found ra bachaa...')
 })
 sequelize.sync({ alter: true }).then(() => {
     app.listen(port, () => {
-        console.log(`Listening at http://localhost/${port}`)
+        console.log(`Listening at http://localhost:${port}`)
     })
 }).catch(e => console.log(e))
