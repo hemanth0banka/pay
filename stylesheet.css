@@ -1,0 +1,82 @@
+body {
+    background: lightgray;
+    display :flex;
+    flex-direction : column;
+
+}
+#pro{
+    margin-left : 45%;
+    align-self : 'center';
+    justify-self: 'center';
+}
+li{
+    background-color : white;
+    display : flex;
+    justify-content : center;
+    margin : 10px;
+    padding : 10px;
+    width: fit-content;;
+    border-radius : 10px;
+    gap : 30px;
+}
+form{
+    background-color : white;
+    display : flex;
+    padding : 25px;
+    margin : 20px;
+    border-radius : 10px;
+    width : auto;
+    justify-content: space-between;
+}
+form>div{
+    display : flex;
+    margin-top : 30px;
+    margin-bottom : 30px;
+    align-items: center;
+}
+form > button {
+    background-color :rgb(27, 141, 255);
+    color : white;
+    border : none;
+    max-width : 100px;
+    max-height: 8ch;
+    border-radius : 10px;
+    align-self : 'center';margin-top : 10px;
+    margin-right : 20px;
+}
+li > button {
+    padding : 10px;
+    background-color :rgb(27, 141, 255);
+    color : white;
+    border : none;
+    border-radius : 10px;
+    align-self : 'center';
+}
+form input,select{
+    margin-left : 10px;
+    border : none;
+    border-bottom : 1px solid black;
+    padding : 10px;
+}
+li {
+    display : flex;
+    padding : 20px;
+    align-items: 'center';
+}
+table{
+    align-self : 'center';
+    margin-left : 50%;
+}
+#dashboard > h1{
+    margin-left : 50%;
+}
+td{
+    background-color : white;
+    margin : 20px;
+    padding : 15px;
+    border : none;
+    border-radius : 10px;
+}
+#show{
+    background-color: white;
+}

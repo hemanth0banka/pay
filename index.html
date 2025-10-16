@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="index/stylesheet.css">
+        <title> Home Page</title>
+        <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    </head>
+    <body>
+        <div>
+            <form id="ask">
+                <textarea name = 'prompt' cols="50" rows="5"></textarea>
+                <button type="submit">ask</button> 
+            </form>
+            <div id="show"></div>
+        </div>
+        <div id="pro">
+            <div class="row">
+                <p>Buy Pro to unlock addition features</p>
+            <button id="renderBtn">Buy Pro </button>
+            </div>
+        </div>
+        <form id="form">
+            <div><label for="amount">choose Expanse Amount : </label><input type="number" name="n1" id="amount"/></div>
+            <div><label for="description">choose Description : </label><input type="text" name="n2" id="description"/></div>
+            <div><label for="category">choose category : </label>
+            <select id="category" name="n3">
+                <option value="movie">movies</option>
+                <option value="fuel">fuel</option>
+                <option value="food">food</option>
+                <option value="electricity">electricity</option>
+            </select></div>
+            <button type="submit"> add Expense </button>
+        </form>
+
+        <ul id="r">
+        </ul>
+        <div id="dashboard"></div>
+    </body>
+
+    <script src="index/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</html>
