@@ -1,17 +1,12 @@
-document.querySelector('form').addEventListener('submit',async (event)=>{
-    try
-    {
-        event.preventDefault()
-        if(event.target.new.value != event.target.confirm.value) throw 'passwords doesnt match'
-        let r = await axios.post('/forgot/reset',{
-            email : event.target.email.value,
-            password : event.target.new.value
-        })
-        console.log(r)
-        window.location.href = 'http://localhost:1000'
-    }
-    catch(e)
-    {
-        console.log(e)
+const {DataTypes} = require('sequelize');
+const sequelize = require('../db.js')
+const reset = sequelize.define('reset',{
+    uid : {
+        type : DataTypes.STRING,
+        allowNull : false
+    },
+    inactive : {
+        type : DataTypes.BOOLEAN
     }
 })
+module.exports = reset
